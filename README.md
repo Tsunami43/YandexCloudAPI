@@ -46,7 +46,7 @@ HOST=0.0.0.0
 ## С помощью Docker и docker-compose
 Клонирование репозитория
 ```bash
-git clone https://github.com/Tsunami43/YandexCloudAPI.git & cd YandexCloudAPI
+git clone https://github.com/Tsunami43/YandexCloudAPI.git && cd YandexCloudAPI
 ```
 Запуск контейнера через docker-compose
 ```bash
@@ -56,7 +56,7 @@ sudo docker-compose  up -d --build
 ### Стандартный запуск
 Клонирование репозитория
 ```bash
-git clone https://github.com/Tsunami43/YandexCloudAPI.git & cd YandexCloudAPI
+git clone https://github.com/Tsunami43/YandexCloudAPI.git && cd YandexCloudAPI
 ```
 Установка зависимостей
 ```bash
