@@ -183,4 +183,10 @@ async def download_file():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)  # Запуск приложения в режиме отладки
+    import os
+    from dotenv import load_dotenv
+
+    load_dotenv()
+    app.run(
+        port=int(os.getenv("PORT")), host=os.getenv("HOST")
+    )  # Запуск приложения в режиме отладки
