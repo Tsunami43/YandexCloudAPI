@@ -10,44 +10,46 @@
 
     <div class="container">
         <!-- Кнопка возврата к поиску -->
-        <div class="header">
+        <header class="header">
             <a href="{{ url_for('search') }}" class="button-back">Вернуться к поиску</a>
-        </div>
+        </header>
+
         <h1>{{ public_key }}</h1>
         <h2 class="path">Текущий путь: {{ current_path }}</h2>
 
+        <!-- Форма для фильтрации файлов -->
         <form method="get" action="{{ url_for('view') }}" class="form-inline" style="margin-bottom: 20px;">
             <input type="hidden" name="public_key" value="{{ public_key }}">
             <input type="hidden" name="path" value="{{ current_path }}">
+            
             <select id="file_type" name="file_type" class="select-filter">
                 <option value="Все файлы" {% if file_type == 'Все файлы' %}selected{% endif %}>Все файлы</option>
                 {% for type in mime_types.keys() %}
                     <option value="{{ type }}" {% if file_type == type %}selected{% endif %}>{{ type }}</option>
                 {% endfor %}
             </select>
+            
             <button type="submit" class="button-filter">Фильтровать</button>
         </form>
 
+        <!-- Форма для скачивания выбранных файлов -->
         <form id="download-form" method="POST" action="{{ url_for('download_selected') }}">
             <ul class="file-list">
+                <!-- Ссылка на уровень выше в директории -->
                 {% if current_path != "/" %}
                     <li>
-                        <a href="{{ url_for('view', public_key=public_key, path=current_path.rsplit('/', 1)[0] or '/') }}" class="folder-icon">
-                            ..
-                        </a>
+                        <a href="{{ url_for('view', public_key=public_key, path=current_path.rsplit('/', 1)[0] or '/') }}" class="folder-icon">..</a>
                     </li>
                 {% endif %}
 
                 <!-- Отображаем все папки и файлы -->
                 {% for file in files %}
                     <li>
-                        {% if not file.is_folder %}
-                            <input type="checkbox" class="file-checkbox" id="{{ file.name }}" name="selected_files" value="{{ file.download_url }}">
-                        {% endif %}
                         {% if file.is_folder %}
                             <span class="folder-icon indent"></span>
                             <a href="{{ url_for('view', public_key=public_key, path=file.path) }}">{{ file.name }}</a>
                         {% else %}
+                            <input type="checkbox" class="file-checkbox" id="{{ file.name }}" name="selected_files" value="{{ file.download_url }}">
                             <span class="file-icon">{{ file.name }}</span>
                             <a href="{{ url_for('download_file', download_url=file.download_url, file_name=file.name) }}" class="button-download">Скачать</a>
                         {% endif %}
@@ -58,13 +60,11 @@
             <!-- Кнопка для скачивания выбранных файлов -->
             <button type="submit" class="button-download" id="download-selected">Скачать выбранные файлы</button>
         </form>
-
     </div>
 
     <script>
         document.getElementById('download-form').addEventListener('submit', function(event) {
-            const selectedFiles = Array.from(document.querySelectorAll('.file-checkbox:checked'))
-                .map(checkbox => checkbox.value);
+            const selectedFiles = Array.from(document.querySelectorAll('.file-checkbox:checked')).map(checkbox => checkbox.value);
             
             // Если не выбраны файлы, предотвращаем отправку формы
             if (selectedFiles.length === 0) {
