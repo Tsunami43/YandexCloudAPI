@@ -1,9 +1,11 @@
 services:
   app:
     build:
-      context: .
-      dockerfile: app/Dockerfile
+      context: app
     ports:
-      - "${PORT}":"${PORT}"
+      - "${PORT}:${PORT}"  
     volumes:
       - .:/app
+    environment:
+      PORT: ${PORT}
+      HOST: ${HOST}
