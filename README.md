@@ -56,7 +56,7 @@ sudo docker-compose  up -d --build
 ### Стандартный запуск
 Клонирование репозитория
 ```bash
-git clone https://github.com/Tsunami43/YandexCloudAPI.git && cd YandexCloudAPI
+git clone https://github.com/Tsunami43/YandexCloudAPI.git && cd YandexCloudAPI/app
 ```
 Установка зависимостей
 ```bash
